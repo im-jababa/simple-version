@@ -4,7 +4,7 @@ version = "1.1.0"
 edition = "2021"
 authors = ["Park JiSoo <cherryjeesoo@gmail.com>"]
 description = "The easiest way to manage versions in rust (I guess)"
-license = "MIT or Apache-2.0"
+license = "MIT"
 
 [dependencies]
 # No dependencies
