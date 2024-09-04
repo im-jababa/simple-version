@@ -1,6 +1,8 @@
 # simple-version
 You can create a new `major`.`minor`.`path` version manually or automatically generate from cargo package version which is in `Cargo.toml`.
 
+No more std dependency from 1.2.0. Now available on no_str environment.
+
 ### How to use
 ```
 use simple_version::Version;
