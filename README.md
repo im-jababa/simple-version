@@ -1,5 +1,6 @@
 # simple-version
 You can create a new `major`.`minor`.`path` version manually or automatically generate from cargo package version which is in `Cargo.toml`.
+
 [GitHub](https://github.com/foolkat/simple-version)
 
 ### How to use
