@@ -3,6 +3,8 @@ You can create a new `major`.`minor`.`path` version manually or automatically ge
 
 No more std dependency from 1.2.0. Now available on no_str environment.
 
+[GitHub](https://github.com/foolkat/simple-version)
+
 ### How to use
 ```
 use simple_version::Version;
