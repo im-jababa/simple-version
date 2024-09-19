@@ -5,7 +5,6 @@ use core::fmt;
 use core::{
     option::Option::{self, Some},
     write,
-    env,
     prelude::rust_2021::derive,
     cmp::{Ord, PartialOrd, PartialEq, Eq}
 };
@@ -37,8 +36,9 @@ impl Version {
     }
 
     /// Creates a `Version` from the package version in `Cargo.toml`.
-    pub fn from_pkg() -> Self {
-        let version_str = env!("CARGO_PKG_VERSION");
+    /// Please use parameter `env!("CARGO_PKG_VERSION")`
+    pub fn from_pkg(cargo_pkg_version: &str) -> Self {
+        let version_str = cargo_pkg_version;
         let mut version_parts = version_str.split('.').map(|s| s.parse::<u16>().unwrap());
 
         Self {
