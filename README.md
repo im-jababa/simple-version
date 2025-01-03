@@ -1,78 +1,87 @@
 # simple-version
-You can create a new `major`.`minor`.`path` version manually or automatically generate from cargo package version which is in `Cargo.toml`.
 
-No more std dependency from 1.2.0. Now available on no_str environment.
+[![Github](https://img.shields.io/badge/github-foolkat/simple_version-8da0cb?style=for-the-badge&labelColor=555555&logo=github)](https://github.com/foolkat/simple-version)
+[![Crates.io](https://img.shields.io/crates/v/simple-version.svg?style=for-the-badge&color=fc8d62&logo=rust)](https://crates.io/crates/simple-version)
+[![Docs.rs](https://img.shields.io/badge/docs.rs-simple_version-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs)](https://docs.rs/simple-version)
+[![Build](https://img.shields.io/github/actions/workflow/status/foolkat/simple-version/rust.yml?branch=main&style=for-the-badge)](https://github.com/foolkat/simple-version/actions?query=branch%3Amain)
 
-Version 1.2.0 has issue that the `from_pkg` read package version from this crate.
-Please use 1.2.1 or later.
+A small Rust library that provides a `Version<T>` type for handling semantic versioning, 
+including an optional build number. It also offers a `version_from_pkg!` macro to embed
+the crate's compile-time `CARGO_PKG_VERSION` directly into your code.
 
-[GitHub](https://github.com/foolkat/simple-version)
+---
 
-### How to use
-```
+## Examples
+
+### 1. create a new `Version` object
+*(without a build number)*
+
+```rust
 use simple_version::Version;
+
+let v = Version::<u32>::new(1, 2, 3);
+
+println!("{}", v);  // 1.2.3
 ```
 
-### Get a cargo package version as release version
-```
-// Create a new release version from cargo package version.
-let release_version::Version = Version::from_pkg(env!("CARGO_PKG_VERSION"));
+---
 
-// or
-let release_version::Version = Version::from_pkg(env!("CARGO_PKG_VERSION")).release();
+### 2. create a new `Version` object
+*(with a build number)*
 
-println!("{}", release_version);
-```
-> `v?.?.?-release`
+```rust
+use simple_version::Version;
 
-### Get a cargo package version as beta version
-```
-// Create a new beta version from cargo package version.
-let beta_version_default::Version = Version::from_pkg(env!("CARGO_PKG_VERSION")).beta(0);
-let beta_version_with_number::Version = Version::from_pkg(env!("CARGO_PKG_VERSION")).beta(1);
+let v = Version::<u32>::new(1, 2, 3).build(4);
 
-println!("{}", beta_version_default);
-println!("{}", beta_version_with_number);
-```
-> `v?.?.?-beta`
-
-> `v?.?.?-beta1`
-
-### Get a cargo package version as alpha version
-```
-// Create a new alpha version from cargo package version.
-let alpha_version_default::Version = Version::from_pkg(env!("CARGO_PKG_VERSION")).alpha(0);
-let alpha_version_with_number::Version = Version::from_pkg(env!("CARGO_PKG_VERSION")).alpha(1);
-
-println!("{}", alpha_version_default);
-println!("{}", alpha_version_with_number);
-```
-> `v?.?.?-alpha`
-
-> `v?.?.?-alpha1`
-
-### Create a new version manually
-```
-// new release version
-// you omit `.release()` at the end.
-let release: Version = Version::new(major, minor, patch).release();
-
-// new beta version
-let beta: Version = Version::new(major, minor, patch).beta(beta_number);
-
-// new alpha version
-let alpha: Version = Version::new(major, minor, patch).alpha(alpha_number);
+println!("{}", v);  // 1.2.3+4
 ```
 
-### Some exeptions
-```
-// You can do this but it will...
-let version: Version = Version::new(1, 2, 3).beta(4).beta(5).beta(6);
-println!("{}", version);
-```
-> `v1.3.4-beta6`
+---
 
-### Comparison
-You can compair between versions.
+### 3. create a new `Version` object
+*(using the Cargo package version)*
 
-`release` > `beta` > `alpha` in same major, minor, patch version
+```toml
+# Cargo.toml
+
+[package]
+name = "..."
+version = "1.2.3"
+...
+```
+
+```rust
+use simple_version::{Version, version_from_pkg};
+
+let v: Version<u32> = version_from_pkg!(u32);
+
+println!("{}", v);  // 1.2.3
+```
+
+---
+
+### 4. Compare between two versions
+
+```rust
+use simple_version::Version;
+
+let v1 = Version::<u32>::new(1, 999, 999);
+let v2 = Version::<u32>::new(2, 0, 0);
+
+assert!(v1 < v2);
+```
+
+---
+
+### 5. Compare between two versions
+*(with exceptions)*
+
+```rust
+use simple_version::Version;
+
+let v1 = Version::<u32>::new(1, 0, 0).build(1); // v1 has a build number.
+let v2 = Version::<u32>::new(1, 0, 0);          // v2 does not.
+
+assert!(v1 > v2);   // In this case, v1 is greater.
+```

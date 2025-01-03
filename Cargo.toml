@@ -1,9 +1,9 @@
 [package]
 name = "simple-version"
-version = "1.2.1"
+version = "2.1.0"
 edition = "2021"
 authors = ["Park JiSoo <cherryjeesoo@gmail.com>"]
-description = "The easiest way to manage versions in rust (I guess)"
+description = "The easiest way to manage versions in rust."
 license = "MIT"
 
 [dependencies]
