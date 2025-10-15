@@ -1,6 +1,6 @@
 [package]
 name = "simple-version"
-version = "2.1.0"
+version = "2.1.1"
 edition = "2021"
 authors = ["Park JiSoo <cherryjeesoo@gmail.com>"]
 description = "The easiest way to manage versions in rust."

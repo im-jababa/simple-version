@@ -29,7 +29,7 @@ mod tests;
 ///
 /// let version: Version<u32> = Version::new(1, 2, 3).build(4);
 /// ```
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Version<T: Ord> {
     /// The major version component.
     /// 
